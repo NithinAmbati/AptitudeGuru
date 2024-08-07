@@ -3,6 +3,9 @@ import { Navigate } from "react-router-dom";
 import { useEffect, useState, useCallback } from "react";
 import "./index.css";
 import { Spin } from "antd";
+import { mainUrl } from "../../../mainUrl";
+import Header from "../../../layouts/Header";
+import { EmployerHeaderContent } from "../../../store/data";
 
 const EmployerProfile = () => {
   const jwtToken = Cookies.get("jwt_token");
@@ -17,10 +20,7 @@ const EmployerProfile = () => {
         authorization: `Bearer ${jwtToken}`,
       },
     };
-    const response = await fetch(
-      "https://careerconnect-apis.vercel.app/profile/employer",
-      options
-    );
+    const response = await fetch(`${mainUrl}/profile/employer`, options);
     if (response.ok) {
       const data = await response.json();
       setUserData(data);
@@ -42,10 +42,7 @@ const EmployerProfile = () => {
       },
       body: JSON.stringify(userData),
     };
-    const response = await fetch(
-      "https://careerconnect-apis.vercel.app/profile/employer",
-      options
-    );
+    const response = await fetch(`${mainUrl}/profile/employer`, options);
     if (response.ok) {
       await response.json();
     }
@@ -57,70 +54,73 @@ const EmployerProfile = () => {
   }
 
   return (
-    <div className="profile-page-bg-container">
-      {isLoading ? (
-        <Spin />
-      ) : (
-        <div className="profile-page-container">
-          <h2>Employer Profile</h2>
-          <hr />
-          <div>
-            <strong>Username:</strong>{" "}
+    <>
+      <Header headerContent={EmployerHeaderContent} />
+      <div className="profile-page-bg-container">
+        {isLoading ? (
+          <Spin />
+        ) : (
+          <div className="profile-page-container">
+            <h2>Employer Profile</h2>
+            <hr />
+            <div>
+              <strong>Username:</strong>{" "}
+              {isEditing ? (
+                <input
+                  type="text"
+                  name="username"
+                  value={userData.username || ""}
+                  onChange={(e) =>
+                    setUserData({ ...userData, username: e.target.value })
+                  }
+                />
+              ) : (
+                userData.username
+              )}
+            </div>
+            <div>
+              <strong>Email:</strong>
+              {userData.email}
+            </div>
+            <div>
+              <strong>Company Name:</strong>
+              {isEditing ? (
+                <input
+                  type="text"
+                  name="companyName"
+                  value={userData.companyName || ""}
+                  onChange={(e) =>
+                    setUserData({ ...userData, companyName: e.target.value })
+                  }
+                />
+              ) : (
+                userData.companyName
+              )}
+            </div>
+            <div>
+              <strong>Current JobRole :</strong>{" "}
+              {isEditing ? (
+                <input
+                  type="text"
+                  name="currentJobRole"
+                  value={userData.currentJobRole || ""}
+                  onChange={(e) =>
+                    setUserData({ ...userData, currentJobRole: e.target.value })
+                  }
+                />
+              ) : (
+                userData.currentJobRole
+              )}
+            </div>
             {isEditing ? (
-              <input
-                type="text"
-                name="username"
-                value={userData.username || ""}
-                onChange={(e) =>
-                  setUserData({ ...userData, username: e.target.value })
-                }
-              />
+              <button onClick={handleSave}>Save</button>
             ) : (
-              userData.username
+              <button onClick={() => setIsEditing(true)}>Edit</button>
             )}
           </div>
-          <div>
-            <strong>Email:</strong>
-            {userData.email}
-          </div>
-          <div>
-            <strong>Company Name:</strong>
-            {isEditing ? (
-              <input
-                type="text"
-                name="companyName"
-                value={userData.companyName || ""}
-                onChange={(e) =>
-                  setUserData({ ...userData, companyName: e.target.value })
-                }
-              />
-            ) : (
-              userData.companyName
-            )}
-          </div>
-          <div>
-            <strong>Current JobRole :</strong>{" "}
-            {isEditing ? (
-              <input
-                type="text"
-                name="currentJobRole"
-                value={userData.currentJobRole || ""}
-                onChange={(e) =>
-                  setUserData({ ...userData, currentJobRole: e.target.value })
-                }
-              />
-            ) : (
-              userData.currentJobRole
-            )}
-          </div>
-          {isEditing ? (
-            <button onClick={handleSave}>Save</button>
-          ) : (
-            <button onClick={() => setIsEditing(true)}>Edit</button>
-          )}
-        </div>
-      )}
-    </div>
+        )}
+      </div>
+    </>
   );
 };
 

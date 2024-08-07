@@ -4,6 +4,8 @@ import JobPostingSteps from "./JobPostingSteps";
 import QuickHire from "./QuickHire";
 import Cookies from "js-cookie";
 import { Navigate } from "react-router-dom";
+import Header from "../../../layouts/Header";
+import { EmployerHeaderContent } from "../../../store/data";
 
 const JobPostingHomePage = () => {
   const jwtToken = Cookies.get("jwt_token");
@@ -11,11 +13,14 @@ const JobPostingHomePage = () => {
     return <Navigate to="/employer/login" />;
   }
   return (
-    <div>
-      <JobPostingHome />
-      <JobPostingSteps />
-      <QuickHire />
-    </div>
+    <>
+      <Header headerContent={EmployerHeaderContent} />
+      <div>
+        <JobPostingHome />
+        <JobPostingSteps />
+        <QuickHire />
+      </div>
+    </>
   );
 };
 

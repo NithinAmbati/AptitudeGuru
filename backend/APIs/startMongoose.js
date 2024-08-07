@@ -1,15 +1,7 @@
-const {
-  Student,
-  Jobs,
-  Employer,
-  AvgSalaries,
-  CompanyReviews,
-} = require("./mongoDBConnection");
+const { Student, Jobs, Employer } = require("./mongoDBConnection");
 
 module.exports = {
   Student,
   Jobs,
   Employer,
-  AvgSalaries,
-  CompanyReviews,
 };

@@ -3,6 +3,9 @@ import { useCallback, useEffect, useState } from "react";
 import Cookies from "js-cookie";
 import { Spin } from "antd";
 import "./index.css";
+import { mainUrl } from "../../mainUrl";
+import Header from "../../layouts/Header";
+import { EmployerHeaderContent } from "../../store/data";
 
 const Applications = () => {
   const { id } = useParams();
@@ -21,7 +24,7 @@ const Applications = () => {
       },
     };
     const response = await fetch(
-      `https://careerconnect-apis.vercel.app/employer/jobs/posted/${id}`,
+      `${mainUrl}/employer/jobs/posted/${id}`,
       options
     );
     const applications = await response.json();
@@ -48,51 +51,54 @@ const Applications = () => {
   }
 
   return (
-    <div className="applications-bg-container">
-      <h1>Applications</h1>
-      {loading ? (
-        <Spin />
-      ) : (
-        <table className="applications-table">
-          <thead>
-            <tr>
-              <th>Username</th>
-              <th>Email</th>
-              <th>Contact Number</th>
-              <th>Resume</th>
-            </tr>
-          </thead>
-          <tbody>
-            {applicationsList.map((application) => (
-              <tr key={application._id}>
-                <td>{application.username}</td>
-                <td>{application.email}</td>
-                <td>{application.contactNumber}</td>
-                <td>
-                  <button
-                    className="view-resume-button"
-                    onClick={() => handleViewResume(application.resume)}
-                  >
-                    View Resume
-                  </button>
-                </td>
+    <>
+      <Header headerContent={EmployerHeaderContent} />
+      <div className="applications-bg-container">
+        <h1>Applications</h1>
+        {loading ? (
+          <Spin />
+        ) : (
+          <table className="applications-table">
+            <thead>
+              <tr>
+                <th>Username</th>
+                <th>Email</th>
+                <th>Contact Number</th>
+                <th>Resume</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
-      )}
+            </thead>
+            <tbody>
+              {applicationsList.map((application) => (
+                <tr key={application._id}>
+                  <td>{application.username}</td>
+                  <td>{application.email}</td>
+                  <td>{application.contactNumber}</td>
+                  <td>
+                    <button
+                      className="view-resume-button"
+                      onClick={() => handleViewResume(application.resume)}
+                    >
+                      View Resume
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        )}
 
-      {showModal && (
-        <div className="modal">
-          <div className="modal-content">
-            <span className="close-button" onClick={handleCloseModal}>
-              &times;
-            </span>
-            <img src={selectedResume} alt="Resume" className="resume-image" />
+        {showModal && (
+          <div className="modal">
+            <div className="modal-content">
+              <span className="close-button" onClick={handleCloseModal}>
+                &times;
+              </span>
+              <img src={selectedResume} alt="Resume" className="resume-image" />
+            </div>
           </div>
-        </div>
-      )}
-    </div>
+        )}
+      </div>
+    </>
   );
 };
 

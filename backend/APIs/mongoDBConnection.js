@@ -56,21 +56,8 @@ const jobSchema = new mongoose.Schema({
   applications: { type: Array, required: false },
 });
 
-const salarySchema = new mongoose.Schema({
-  jobRole: { type: String, required: true },
-  salary: { type: String, required: true },
-});
-
-const reviewSchema = new mongoose.Schema({
-  companyName: { type: String, required: true },
-  reviewsCount: { type: Number, required: true },
-  reviewScore: { type: Number, required: true },
-});
-
 const Student = mongoose.model("student-logins", userSchema1);
 const Employer = mongoose.model("employer-logins", userSchema2);
 const Jobs = mongoose.model("jobs", jobSchema);
-const AvgSalaries = mongoose.model("avg-salaries", salarySchema);
-const CompanyReviews = mongoose.model("company-reviews", reviewSchema);
 
-module.exports = { Student, Employer, Jobs, AvgSalaries, CompanyReviews };
+module.exports = { Student, Employer, Jobs };

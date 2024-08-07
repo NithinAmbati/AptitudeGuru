@@ -2,6 +2,7 @@ import { useState, useEffect, useCallback } from "react";
 import { useParams } from "react-router-dom";
 import Cookies from "js-cookie";
 import "./index.css";
+import { mainUrl } from "../../mainUrl";
 
 function formatDate(dateString) {
   const date = new Date(dateString);
@@ -15,15 +16,12 @@ function formatDate(dateString) {
 const verifyProfile = async (jwtToken) => {
   if (!jwtToken) return false;
   try {
-    const response = await fetch(
-      "https://careerconnect-apis.vercel.app/verify-profile",
-      {
-        method: "GET",
-        headers: {
-          authorization: `Bearer ${jwtToken}`,
-        },
-      }
-    );
+    const response = await fetch(`${mainUrl}/verify-profile`, {
+      method: "GET",
+      headers: {
+        authorization: `Bearer ${jwtToken}`,
+      },
+    });
     if (response.ok) return true;
     else return false;
   } catch (error) {
@@ -34,15 +32,12 @@ const verifyProfile = async (jwtToken) => {
 
 const checkForApplied = async (id, jwtToken) => {
   try {
-    const response = await fetch(
-      `https://careerconnect-apis.vercel.app/jobs/${id}/check-isapplied`,
-      {
-        method: "GET",
-        headers: {
-          authorization: `Bearer ${jwtToken}`,
-        },
-      }
-    );
+    const response = await fetch(`${mainUrl}/jobs/${id}/check-isapplied`, {
+      method: "GET",
+      headers: {
+        authorization: `Bearer ${jwtToken}`,
+      },
+    });
     if (response.ok) return true;
     return false;
   } catch (error) {
@@ -57,9 +52,7 @@ const DetailedJobDescription = () => {
 
   const getData = useCallback(async () => {
     try {
-      const response = await fetch(
-        `https://careerconnect-apis.vercel.app/jobs/${id}`
-      );
+      const response = await fetch(`${mainUrl}/jobs/${id}`);
       if (!response.ok) {
         throw new Error("Failed to fetch job details");
       }
@@ -101,10 +94,7 @@ const DetailedJobDescription = () => {
         Authorization: `Bearer ${jwtToken}`,
       },
     };
-    const response = await fetch(
-      `https://careerconnect-apis.vercel.app/jobs/apply/${id}`,
-      options
-    );
+    const response = await fetch(`${mainUrl}/jobs/apply/${id}`, options);
     if (!response.ok) {
       alert("Failed to apply for the job");
     } else {

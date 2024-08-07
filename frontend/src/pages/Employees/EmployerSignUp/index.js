@@ -1,5 +1,6 @@
 import { useState } from "react";
 import "./index.css";
+import { mainUrl } from "../../../mainUrl";
 
 const SignUp = () => {
   const [username, setUsername] = useState("");
@@ -14,7 +15,7 @@ const SignUp = () => {
     event.preventDefault();
     const userDetails = { username, password, email };
     console.log(userDetails);
-    const url = "https://careerconnect-apis.vercel.app/register/employer";
+    const url = `${mainUrl}/register/employer`;
     const options = {
       method: "POST",
       headers: {

@@ -6,6 +6,9 @@ import { Navigate } from "react-router-dom";
 import axios from "axios";
 import { Spin } from "antd";
 import "./index.css";
+import { mainUrl } from "../../../mainUrl";
+import Header from "../../../layouts/Header";
+import { StudentHeaderContent } from "../../../store/data";
 
 const EmployerProfile = () => {
   const jwtToken = Cookies.get("jwt_token");
@@ -22,10 +25,7 @@ const EmployerProfile = () => {
         authorization: `Bearer ${jwtToken}`,
       },
     };
-    const response = await fetch(
-      "https://careerconnect-apis.vercel.app/profile/student",
-      options
-    );
+    const response = await fetch(`${mainUrl}/profile/student`, options);
     if (response.ok) {
       const data = await response.json();
       setProfile(data);
@@ -92,11 +92,11 @@ const EmployerProfile = () => {
         const formData = new FormData();
         formData.append("file", resume);
         formData.append("upload_preset", "image_preset");
-        formData.append("cloud_name", "dqztnamkx"); // Replace with your Cloudinary upload preset
+        formData.append("cloud_name", "dqztnamkx");
         const response = await axios.post(
           "https://api.cloudinary.com/v1_1/dqztnamkx/upload",
           formData
-        ); // Replace with your Cloudinary URL
+        );
         resumeUrl = response.data.secure_url;
       }
       const updatedProfile = {
@@ -112,10 +112,7 @@ const EmployerProfile = () => {
         },
         body: JSON.stringify(updatedProfile),
       };
-      const response = await fetch(
-        "https://careerconnect-apis.vercel.app/profile/student",
-        options
-      );
+      const response = await fetch(`${mainUrl}/profile/student`, options);
       if (response.status === 200) {
         setProfile(updatedProfile);
         setIsEditing(false);
@@ -139,169 +136,172 @@ const EmployerProfile = () => {
   }
 
   return (
-    <div className="profile-page-bg-container">
-      {loading ? (
-        <Spin />
-      ) : (
-        <div className="profile-page-container">
-          <div className="user-profile">
-            <div className="info-section">
-              <h2>Candidate Profile</h2>
-              <div>
-                <strong>Username:</strong>{" "}
-                {isEditing ? (
-                  <input
-                    type="text"
-                    name="username"
-                    value={profile.username || ""}
-                    onChange={handleInputChange}
-                  />
-                ) : (
-                  profile.username
-                )}
-              </div>
-              <div>
-                <strong>Contact:</strong>{" "}
-                {isEditing ? (
-                  <input
-                    type="text"
-                    name="contactNumber"
-                    value={profile.contactNumber || ""}
-                    onChange={handleInputChange}
-                  />
-                ) : (
-                  profile.contactNumber
-                )}
-              </div>
-              <div>
-                <strong>Email:</strong>{" "}
-                {isEditing ? (
-                  <input
-                    type="text"
-                    name="email"
-                    value={profile.email || ""}
-                    onChange={handleInputChange}
-                  />
-                ) : (
-                  profile.email
-                )}
-              </div>
-              <div>
-                <strong>Address:</strong>{" "}
-                {isEditing ? (
-                  <input
-                    type="text"
-                    name="address"
-                    value={profile.address || ""}
-                    onChange={handleInputChange}
-                  />
-                ) : (
-                  profile.address
-                )}
-              </div>
-              <div>
-                <strong>Education:</strong>{" "}
-                {isEditing ? (
-                  <input
-                    type="text"
-                    name="education"
-                    value={profile.education || ""}
-                    onChange={handleInputChange}
-                  />
-                ) : (
-                  profile.education
-                )}
-              </div>
-              <div>
-                <strong>Experience:</strong>{" "}
-                {isEditing ? (
-                  <input
-                    type="text"
-                    name="experience"
-                    value={profile.experience || ""}
-                    onChange={handleInputChange}
-                  />
-                ) : (
-                  profile.experience
-                )}
-              </div>
-              <div>
-                <strong>Skills:</strong>
-                {!isEditing ? (
-                  <ul className="list">
-                    {selectedOptions.map((skill) => (
-                      <li key={skill} className="mx-2">
-                        {skill}
-                      </li>
-                    ))}
-                  </ul>
-                ) : (
-                  <div>
-                    <Select
-                      components={animatedComponents}
-                      isMulti
-                      options={options}
-                      value={options.filter((option) =>
-                        selectedOptions.includes(option.value)
-                      )}
-                      onChange={handleChange}
-                      styles={customStyles}
-                      placeholder="Select skills..."
+    <>
+      <Header headerContent={StudentHeaderContent} />
+      <div className="profile-page-bg-container">
+        {loading ? (
+          <Spin />
+        ) : (
+          <div className="profile-page-container">
+            <div className="user-profile">
+              <div className="info-section">
+                <h2>Candidate Profile</h2>
+                <div>
+                  <strong>Username:</strong>{" "}
+                  {isEditing ? (
+                    <input
+                      type="text"
+                      name="username"
+                      value={profile.username || ""}
+                      onChange={handleInputChange}
                     />
-                  </div>
-                )}
-              </div>
-            </div>
-            <div className="resume-section">
-              <div>
-                <strong>Resume:</strong>{" "}
-                {isEditing ? (
-                  <input
-                    type="file"
-                    name="resume"
-                    onChange={(e) => {
-                      setResume(e.target.files[0]);
-                    }}
-                  />
-                ) : (
-                  profile.resume && (
+                  ) : (
+                    profile.username
+                  )}
+                </div>
+                <div>
+                  <strong>Contact:</strong>{" "}
+                  {isEditing ? (
+                    <input
+                      type="text"
+                      name="contactNumber"
+                      value={profile.contactNumber || ""}
+                      onChange={handleInputChange}
+                    />
+                  ) : (
+                    profile.contactNumber
+                  )}
+                </div>
+                <div>
+                  <strong>Email:</strong>{" "}
+                  {isEditing ? (
+                    <input
+                      type="text"
+                      name="email"
+                      value={profile.email || ""}
+                      onChange={handleInputChange}
+                    />
+                  ) : (
+                    profile.email
+                  )}
+                </div>
+                <div>
+                  <strong>Address:</strong>{" "}
+                  {isEditing ? (
+                    <input
+                      type="text"
+                      name="address"
+                      value={profile.address || ""}
+                      onChange={handleInputChange}
+                    />
+                  ) : (
+                    profile.address
+                  )}
+                </div>
+                <div>
+                  <strong>Education:</strong>{" "}
+                  {isEditing ? (
+                    <input
+                      type="text"
+                      name="education"
+                      value={profile.education || ""}
+                      onChange={handleInputChange}
+                    />
+                  ) : (
+                    profile.education
+                  )}
+                </div>
+                <div>
+                  <strong>Experience:</strong>{" "}
+                  {isEditing ? (
+                    <input
+                      type="text"
+                      name="experience"
+                      value={profile.experience || ""}
+                      onChange={handleInputChange}
+                    />
+                  ) : (
+                    profile.experience
+                  )}
+                </div>
+                <div>
+                  <strong>Skills:</strong>
+                  {!isEditing ? (
+                    <ul className="list">
+                      {selectedOptions.map((skill) => (
+                        <li key={skill} className="mx-2">
+                          {skill}
+                        </li>
+                      ))}
+                    </ul>
+                  ) : (
                     <div>
-                      <a
-                        href={profile.resume}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="btn btn-primary mb-2 mt-2"
-                      >
-                        Download Resume
-                      </a>
-                      <img
-                        src={profile.resume}
-                        alt="Resume preview"
-                        className="resume-preview"
-                        onError={(e) => {
-                          e.target.style.display = "none";
-                          alert("Failed to load the resume preview image.");
-                        }}
+                      <Select
+                        components={animatedComponents}
+                        isMulti
+                        options={options}
+                        value={options.filter((option) =>
+                          selectedOptions.includes(option.value)
+                        )}
+                        onChange={handleChange}
+                        styles={customStyles}
+                        placeholder="Select skills..."
                       />
                     </div>
-                  )
-                )}
+                  )}
+                </div>
+              </div>
+              <div className="resume-section">
+                <div>
+                  <strong>Resume:</strong>{" "}
+                  {isEditing ? (
+                    <input
+                      type="file"
+                      name="resume"
+                      onChange={(e) => {
+                        setResume(e.target.files[0]);
+                      }}
+                    />
+                  ) : (
+                    profile.resume && (
+                      <div>
+                        <a
+                          href={profile.resume}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="btn btn-primary mb-2 mt-2"
+                        >
+                          Download Resume
+                        </a>
+                        <img
+                          src={profile.resume}
+                          alt="Resume preview"
+                          className="resume-preview"
+                          onError={(e) => {
+                            e.target.style.display = "none";
+                            alert("Failed to load the resume preview image.");
+                          }}
+                        />
+                      </div>
+                    )
+                  )}
+                </div>
               </div>
             </div>
+            {!isEditing && (
+              <button onClick={toggleEditing} className="mt-2">
+                Edit
+              </button>
+            )}
+            {isEditing && (
+              <button onClick={handleSave} className="save" disabled={loading}>
+                {loading ? "Saving..." : "Save"}
+              </button>
+            )}
           </div>
-          {!isEditing && (
-            <button onClick={toggleEditing} className="mt-2">
-              Edit
-            </button>
-          )}
-          {isEditing && (
-            <button onClick={handleSave} className="save" disabled={loading}>
-              {loading ? "Saving..." : "Save"}
-            </button>
-          )}
-        </div>
-      )}
-    </div>
+        )}
+      </div>
+    </>
   );
 };
 

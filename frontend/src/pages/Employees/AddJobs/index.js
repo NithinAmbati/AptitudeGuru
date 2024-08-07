@@ -2,6 +2,9 @@ import React, { useState } from "react";
 import Cookies from "js-cookie";
 import { Navigate } from "react-router-dom";
 import "./index.css";
+import { mainUrl } from "../../../mainUrl";
+import Header from "../../../layouts/Header";
+import { EmployerHeaderContent } from "../../../store/data";
 
 const AddJob = () => {
   const jwtToken = Cookies.get("jwt_token");
@@ -92,10 +95,7 @@ const AddJob = () => {
       },
       body: JSON.stringify(jobDetails),
     };
-    const response = await fetch(
-      "https://careerconnect-apis.vercel.app/jobs",
-      options
-    );
+    const response = await fetch(`${mainUrl}/jobs`, options);
     if (response.ok) {
       alert("Job Added Successfully!");
       setCompanyName("");
@@ -115,7 +115,7 @@ const AddJob = () => {
       setWorkHours("");
       setBenefits("");
       setSkills("");
-      await fetch("https://careerconnect-apis.vercel.app/send-mail", {
+      await fetch(`${mainUrl}/send-mail`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -131,239 +131,246 @@ const AddJob = () => {
     }
   };
 
-  console.log(jwtToken);
-
   if (jwtToken === undefined) {
     return <Navigate to="/employer/login" />;
   }
   return (
-    <div className="addjob-page-bg-container">
-      <form className="form-container" onSubmit={addJobBtn}>
-        <div className="form-sub-container">
-          <div>
-            <label>Company Name:</label>
-            <input
-              type="text"
-              value={companyName}
-              maxLength={50}
-              onChange={(event) => {
-                setCompanyName(event.target.value);
-              }}
-            />
-            {errors.companyName && (
-              <span className="error">{errors.companyName}</span>
-            )}
+    <>
+      <Header headerContent={EmployerHeaderContent} />
+      <div className="addjob-page-bg-container">
+        <form className="form-container" onSubmit={addJobBtn}>
+          <div className="form-sub-container">
+            <div>
+              <label>Company Name:</label>
+              <input
+                type="text"
+                value={companyName}
+                maxLength={50}
+                onChange={(event) => {
+                  setCompanyName(event.target.value);
+                }}
+              />
+              {errors.companyName && (
+                <span className="error">{errors.companyName}</span>
+              )}
 
-            <label>Job Location</label>
-            <input
-              type="text"
-              value={jobLocation}
-              maxLength={100}
-              onChange={(event) => {
-                setJobLocation(event.target.value);
-              }}
-            />
-            {errors.jobLocation && (
-              <span className="error">{errors.jobLocation}</span>
-            )}
+              <label>Job Location</label>
+              <input
+                type="text"
+                value={jobLocation}
+                maxLength={100}
+                onChange={(event) => {
+                  setJobLocation(event.target.value);
+                }}
+              />
+              {errors.jobLocation && (
+                <span className="error">{errors.jobLocation}</span>
+              )}
 
-            <label>Job Role:</label>
-            <input
-              type="text"
-              value={jobRole}
-              maxLength={50}
-              onChange={(event) => {
-                setJobRole(event.target.value);
-              }}
-            />
-            {errors.jobRole && <span className="error">{errors.jobRole}</span>}
+              <label>Job Role:</label>
+              <input
+                type="text"
+                value={jobRole}
+                maxLength={50}
+                onChange={(event) => {
+                  setJobRole(event.target.value);
+                }}
+              />
+              {errors.jobRole && (
+                <span className="error">{errors.jobRole}</span>
+              )}
 
-            <label>Job Description:</label>
-            <input
-              type="text"
-              value={jobDescription}
-              maxLength={200}
-              onChange={(event) => {
-                setJobDescription(event.target.value);
-              }}
-            />
-            {errors.jobDescription && (
-              <span className="error">{errors.jobDescription}</span>
-            )}
+              <label>Job Description:</label>
+              <input
+                type="text"
+                value={jobDescription}
+                maxLength={200}
+                onChange={(event) => {
+                  setJobDescription(event.target.value);
+                }}
+              />
+              {errors.jobDescription && (
+                <span className="error">{errors.jobDescription}</span>
+              )}
 
-            <label>Job Type:</label>
-            <input
-              type="text"
-              value={jobType}
-              maxLength={30}
-              onChange={(event) => {
-                setJobType(event.target.value);
-              }}
-            />
-            {errors.jobType && <span className="error">{errors.jobType}</span>}
+              <label>Job Type:</label>
+              <input
+                type="text"
+                value={jobType}
+                maxLength={30}
+                onChange={(event) => {
+                  setJobType(event.target.value);
+                }}
+              />
+              {errors.jobType && (
+                <span className="error">{errors.jobType}</span>
+              )}
 
-            <label>Mode :</label>
-            <input
-              type="text"
-              value={mode}
-              maxLength={30}
-              onChange={(event) => {
-                setMode(event.target.value);
-              }}
-            />
-            {errors.mode && <span className="error">{errors.mode}</span>}
+              <label>Mode :</label>
+              <input
+                type="text"
+                value={mode}
+                maxLength={30}
+                onChange={(event) => {
+                  setMode(event.target.value);
+                }}
+              />
+              {errors.mode && <span className="error">{errors.mode}</span>}
 
-            <label>Stipend</label>
-            <input
-              type="text"
-              value={stipend}
-              maxLength={20}
-              onChange={(event) => {
-                setStipend(event.target.value);
-              }}
-            />
-            {errors.stipend && <span className="error">{errors.stipend}</span>}
+              <label>Stipend</label>
+              <input
+                type="text"
+                value={stipend}
+                maxLength={20}
+                onChange={(event) => {
+                  setStipend(event.target.value);
+                }}
+              />
+              {errors.stipend && (
+                <span className="error">{errors.stipend}</span>
+              )}
 
-            <label>Company Overview:</label>
-            <input
-              type="text"
-              value={companyOverview}
-              maxLength={200}
-              onChange={(event) => {
-                setCompanyOverview(event.target.value);
-              }}
-            />
-            {errors.companyOverview && (
-              <span className="error">{errors.companyOverview}</span>
-            )}
+              <label>Company Overview:</label>
+              <input
+                type="text"
+                value={companyOverview}
+                maxLength={200}
+                onChange={(event) => {
+                  setCompanyOverview(event.target.value);
+                }}
+              />
+              {errors.companyOverview && (
+                <span className="error">{errors.companyOverview}</span>
+              )}
 
-            <label>Qualifications</label>
-            <input
-              type="text"
-              value={qualifications}
-              maxLength={200}
-              onChange={(event) => {
-                setQualifications(event.target.value);
-              }}
-            />
-            {errors.qualifications && (
-              <span className="error">{errors.qualifications}</span>
-            )}
+              <label>Qualifications</label>
+              <input
+                type="text"
+                value={qualifications}
+                maxLength={200}
+                onChange={(event) => {
+                  setQualifications(event.target.value);
+                }}
+              />
+              {errors.qualifications && (
+                <span className="error">{errors.qualifications}</span>
+              )}
+            </div>
+            <div>
+              <label>Experience Level:</label>
+              <input
+                type="text"
+                value={experienceLevel}
+                maxLength={50}
+                onChange={(event) => {
+                  setExperienceLevel(event.target.value);
+                }}
+              />
+              {errors.experienceLevel && (
+                <span className="error">{errors.experienceLevel}</span>
+              )}
+
+              <label>Education Level Name:</label>
+              <input
+                type="text"
+                value={educationLevel}
+                maxLength={50}
+                onChange={(event) => {
+                  setEducationLevel(event.target.value);
+                }}
+              />
+              {errors.educationLevel && (
+                <span className="error">{errors.educationLevel}</span>
+              )}
+
+              <label>Job Posting Date:</label>
+              <input
+                type="date"
+                value={jobPostingDate}
+                onChange={(event) => {
+                  setJobPostingDate(event.target.value);
+                }}
+              />
+
+              <label>Application Deadline:</label>
+              <input
+                type="date"
+                value={applicationDeadline}
+                onChange={(event) => {
+                  setApplicationDeadline(event.target.value);
+                }}
+              />
+
+              <label>Application Process:</label>
+              <input
+                type="text"
+                value={applicationProcess}
+                maxLength={200}
+                onChange={(event) => {
+                  setApplicationProcess(event.target.value);
+                }}
+              />
+              {errors.applicationProcess && (
+                <span className="error">{errors.applicationProcess}</span>
+              )}
+
+              <label>Job Duration:</label>
+              <input
+                type="text"
+                value={jobDuration}
+                maxLength={50}
+                onChange={(event) => {
+                  setJobDuration(event.target.value);
+                }}
+              />
+              {errors.jobDuration && (
+                <span className="error">{errors.jobDuration}</span>
+              )}
+
+              <label>Work Hours:</label>
+              <input
+                type="text"
+                value={workHours}
+                maxLength={50}
+                onChange={(event) => {
+                  setWorkHours(event.target.value);
+                }}
+              />
+              {errors.workHours && (
+                <span className="error">{errors.workHours}</span>
+              )}
+
+              <label>Benefits:</label>
+              <input
+                type="text"
+                value={benefits}
+                maxLength={200}
+                onChange={(event) => {
+                  setBenefits(event.target.value);
+                }}
+              />
+              {errors.benefits && (
+                <span className="error">{errors.benefits}</span>
+              )}
+
+              <label>Skills:</label>
+              <input
+                type="text"
+                value={skills}
+                maxLength={200}
+                onChange={(event) => {
+                  setSkills(event.target.value);
+                }}
+              />
+              {errors.skills && <span className="error">{errors.skills}</span>}
+            </div>
           </div>
-          <div>
-            <label>Experience Level:</label>
-            <input
-              type="text"
-              value={experienceLevel}
-              maxLength={50}
-              onChange={(event) => {
-                setExperienceLevel(event.target.value);
-              }}
-            />
-            {errors.experienceLevel && (
-              <span className="error">{errors.experienceLevel}</span>
-            )}
-
-            <label>Education Level Name:</label>
-            <input
-              type="text"
-              value={educationLevel}
-              maxLength={50}
-              onChange={(event) => {
-                setEducationLevel(event.target.value);
-              }}
-            />
-            {errors.educationLevel && (
-              <span className="error">{errors.educationLevel}</span>
-            )}
-
-            <label>Job Posting Date:</label>
-            <input
-              type="date"
-              value={jobPostingDate}
-              onChange={(event) => {
-                setJobPostingDate(event.target.value);
-              }}
-            />
-
-            <label>Application Deadline:</label>
-            <input
-              type="date"
-              value={applicationDeadline}
-              onChange={(event) => {
-                setApplicationDeadline(event.target.value);
-              }}
-            />
-
-            <label>Application Process:</label>
-            <input
-              type="text"
-              value={applicationProcess}
-              maxLength={200}
-              onChange={(event) => {
-                setApplicationProcess(event.target.value);
-              }}
-            />
-            {errors.applicationProcess && (
-              <span className="error">{errors.applicationProcess}</span>
-            )}
-
-            <label>Job Duration:</label>
-            <input
-              type="text"
-              value={jobDuration}
-              maxLength={50}
-              onChange={(event) => {
-                setJobDuration(event.target.value);
-              }}
-            />
-            {errors.jobDuration && (
-              <span className="error">{errors.jobDuration}</span>
-            )}
-
-            <label>Work Hours:</label>
-            <input
-              type="text"
-              value={workHours}
-              maxLength={50}
-              onChange={(event) => {
-                setWorkHours(event.target.value);
-              }}
-            />
-            {errors.workHours && (
-              <span className="error">{errors.workHours}</span>
-            )}
-
-            <label>Benefits:</label>
-            <input
-              type="text"
-              value={benefits}
-              maxLength={200}
-              onChange={(event) => {
-                setBenefits(event.target.value);
-              }}
-            />
-            {errors.benefits && (
-              <span className="error">{errors.benefits}</span>
-            )}
-
-            <label>Skills:</label>
-            <input
-              type="text"
-              value={skills}
-              maxLength={200}
-              onChange={(event) => {
-                setSkills(event.target.value);
-              }}
-            />
-            {errors.skills && <span className="error">{errors.skills}</span>}
-          </div>
-        </div>
-        <button type="submit" className="btn btn-dark">
-          Add
-        </button>
-      </form>
-    </div>
+          <button type="submit" className="btn btn-dark">
+            Add
+          </button>
+        </form>
+      </div>
+    </>
   );
 };
 

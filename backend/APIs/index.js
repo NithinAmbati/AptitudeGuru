@@ -1,8 +1,6 @@
 const express = require("express");
 const router = express.Router();
 
-const companyReviewsRouter = require("./companyReviews");
-const salaryGuideRouter = require("./avgSalaries");
 const jobsRouter = require("./jobs");
 const loginRouter = require("./login");
 const registerRouter = require("./register");
@@ -16,8 +14,7 @@ const verifyProfileRouter = require("./verifyProfile");
 
 router.use("/login", loginRouter);
 router.use("/register", registerRouter);
-router.use("/company-reviews", companyReviewsRouter);
-router.use("/salary-guide", salaryGuideRouter);
+
 router.use("/jobs", jobsRouter);
 router.use("/", OtpRouter);
 router.use("/profile", profileRouter);
