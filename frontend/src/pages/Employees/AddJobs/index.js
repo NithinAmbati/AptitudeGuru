@@ -1,13 +1,12 @@
 import React, { useState } from "react";
 import Cookies from "js-cookie";
-import { Navigate } from "react-router-dom";
 import "./index.css";
 import { mainUrl } from "../../../mainUrl";
 import Header from "../../../layouts/Header";
 import { EmployerHeaderContent } from "../../../store/data";
 
 const AddJob = () => {
-  const jwtToken = Cookies.get("jwt_token");
+  const jwtToken = Cookies.get("jwtToken");
   const [companyName, setCompanyName] = useState("");
   const [jobRole, setJobRole] = useState("");
   const [jobLocation, setJobLocation] = useState("");
@@ -131,9 +130,6 @@ const AddJob = () => {
     }
   };
 
-  if (jwtToken === undefined) {
-    return <Navigate to="/employer/login" />;
-  }
   return (
     <>
       <Header headerContent={EmployerHeaderContent} />

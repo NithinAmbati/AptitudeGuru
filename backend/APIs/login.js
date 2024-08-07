@@ -15,9 +15,9 @@ router.post("/student", async (req, res) => {
       return;
     }
 
-    // Generate JWT token
     const payload = {
       email: email,
+      role: "student",
     };
     const jwtToken = jwt.sign(payload, "Nithin");
     res.status(201).send({ jwtToken });
@@ -41,6 +41,7 @@ router.post("/employer", async (req, res) => {
     // Generate JWT token
     const payload = {
       email: email,
+      role: "employer",
     };
     const jwtToken = jwt.sign(payload, "Nithin");
     res.status(201).send({ jwtToken });

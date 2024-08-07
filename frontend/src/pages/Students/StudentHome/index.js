@@ -1,5 +1,4 @@
 import Cookies from "js-cookie";
-import { Navigate } from "react-router-dom";
 import { useState, useEffect, useCallback } from "react";
 import JobItem from "../../../components/JobItem";
 import { Spin } from "antd";
@@ -9,7 +8,7 @@ import Header from "../../../layouts/Header";
 import { StudentHeaderContent } from "../../../store/data";
 
 const StudentHome = () => {
-  const jwtToken = Cookies.get("jwt_token");
+  const jwtToken = Cookies.get("jwtToken");
   const [jobsList, setJobsList] = useState([]);
   const [isLoading, setLoading] = useState(true);
 
@@ -35,10 +34,6 @@ const StudentHome = () => {
   useEffect(() => {
     getJobsList();
   }, [getJobsList]);
-
-  if (jwtToken === undefined) {
-    return <Navigate to="/student/login" />;
-  }
 
   return (
     <>

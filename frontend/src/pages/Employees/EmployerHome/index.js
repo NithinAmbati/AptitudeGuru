@@ -1,5 +1,4 @@
 import Cookies from "js-cookie";
-import { Navigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import JobItem from "../../../components/JobItem";
 import { Spin } from "antd";
@@ -18,7 +17,7 @@ const EmployerHome = () => {
 
   const getJobsList = async () => {
     const apiUrl = `${mainUrl}/jobs`;
-    const jwtToken = Cookies.get("jwt_token");
+    const jwtToken = Cookies.get("jwtToken");
     const options = {
       method: "GET",
       headers: {
@@ -35,11 +34,6 @@ const EmployerHome = () => {
       setLoading(false);
     }
   };
-
-  const jwtToken = Cookies.get("jwt_token");
-  if (jwtToken === undefined) {
-    return <Navigate to="/employer/login" />;
-  }
 
   return (
     <>

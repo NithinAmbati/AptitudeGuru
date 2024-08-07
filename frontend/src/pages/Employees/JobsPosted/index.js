@@ -1,7 +1,7 @@
 import { Spin } from "antd";
 import Cookies from "js-cookie";
 import { useCallback, useEffect, useState } from "react";
-import { useNavigate, Navigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import "./index.css";
 import { mainUrl } from "../../../mainUrl";
 import Header from "../../../layouts/Header";
@@ -9,7 +9,7 @@ import { EmployerHeaderContent } from "../../../store/data";
 
 const JobsPosted = () => {
   const navigate = useNavigate();
-  const jwtToken = Cookies.get("jwt_token");
+  const jwtToken = Cookies.get("jwtToken");
   const [jobsPostedList, setJobsPostedList] = useState([]);
   const [isLoading, setLoading] = useState(true);
 
@@ -31,10 +31,6 @@ const JobsPosted = () => {
   useEffect(() => {
     getJobsPostedList();
   }, [getJobsPostedList]);
-
-  if (jwtToken === undefined) {
-    return <Navigate to="/employer/login" />;
-  }
 
   return (
     <>

@@ -39,7 +39,7 @@ const Login = () => {
       if (response.ok === true) {
         const { jwtToken } = await response.json();
         console.log(jwtToken);
-        Cookie.set("jwt_token", jwtToken, { expires: 1 });
+        Cookie.set("jwtToken", jwtToken, { expires: 1 });
         loginSuccess();
       } else {
         console.log("Login failed");

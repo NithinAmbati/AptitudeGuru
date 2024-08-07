@@ -47,7 +47,7 @@ const checkForApplied = async (id, jwtToken) => {
 
 const DetailedJobDescription = () => {
   const { id } = useParams();
-  const jwtToken = Cookies.get("jwt_token");
+  const jwtToken = Cookies.get("jwtToken");
   const [jobDetails, setJobDetails] = useState({});
 
   const getData = useCallback(async () => {

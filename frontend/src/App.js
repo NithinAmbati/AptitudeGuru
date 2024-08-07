@@ -18,38 +18,104 @@ import Applications from "./pages/Applications";
 import NotFound from "./pages/NotFound";
 import ViewStudent from "./pages/Employees/viewStudents";
 import { Navigate } from "react-router-dom";
+import ProtectedRoute from "./protectedRoutes/ProtectedRoute";
+import UnAuthorized from "./UnAuthorized";
+import CheckAlreadyLogged from "./protectedRoutes/CheckAlreadyLogged";
 
 function App() {
   return (
     <Routes>
-      <Route exact path="/" element={<Home />} />
-      <Route exact path="/student/login" element={<CandidateLogin />} />
-      <Route exact path="/student/signup" element={<CandidateSignUp />} />
-      <Route exact path="/employer/login" element={<EmployerLogin />} />
-      <Route exact path="/employer/signup" element={<EmployerSignUp />} />
-      <Route exact path="/employer" element={<EmployerHome />} />
-      <Route exact path="/student" element={<StudentHome />} />
+      <Route path="/" element={<CheckAlreadyLogged component={Home} />} />
       <Route
-        exact
+        path="/student/login"
+        element={<CheckAlreadyLogged component={CandidateLogin} />}
+      />
+      <Route
+        path="/student/signup"
+        element={<CheckAlreadyLogged component={CandidateSignUp} />}
+      />
+      <Route
+        path="/employer/login"
+        element={<CheckAlreadyLogged component={EmployerLogin} />}
+      />
+      <Route
+        path="/employer/signup"
+        element={<CheckAlreadyLogged component={EmployerSignUp} />}
+      />
+      <Route
+        path="/employer"
+        element={
+          <ProtectedRoute component={EmployerHome} requiredRole="employer" />
+        }
+      />
+      <Route
+        path="/student"
+        element={
+          <ProtectedRoute component={StudentHome} requiredRole="student" />
+        }
+      />
+
+      <Route
         path="/student/jobs/:id"
-        element={<DetailedJobDescription />}
+        element={
+          <ProtectedRoute
+            component={DetailedJobDescription}
+            requiredRole="student"
+          />
+        }
       />
+
       <Route
-        exact
         path="/employer/jobs/posting"
-        element={<JobPostingHomePage />}
+        element={
+          <ProtectedRoute
+            component={JobPostingHomePage}
+            requiredRole="employer"
+          />
+        }
       />
-      <Route exact path="/employer/jobs/posting/post" element={<AddJob />} />
-      <Route exact path="/employer/jobs/posted" element={<JobsPosted />} />
+
+      <Route
+        path="/employer/jobs/posting/post"
+        element={<ProtectedRoute component={AddJob} requiredRole="employer" />}
+      />
+
+      <Route
+        path="/employer/jobs/posted"
+        element={
+          <ProtectedRoute component={JobsPosted} requiredRole="employer" />
+        }
+      />
       <Route
         exact
         path="/employer/jobs/posted/:id"
-        element={<Applications />}
+        element={
+          <ProtectedRoute component={Applications} requiredRole="employer" />
+        }
       />
-      <Route exact path="/employer/profile" element={<EmployerProfile />} />
-      <Route exact path="/employer/view-students" element={<ViewStudent />} />
-      <Route exact path="/student/profile" element={<StudentProfile />} />
+      <Route
+        exact
+        path="/employer/profile"
+        element={
+          <ProtectedRoute component={EmployerProfile} requiredRole="employer" />
+        }
+      />
+      <Route
+        exact
+        path="/employer/view-students"
+        element={
+          <ProtectedRoute component={ViewStudent} requiredRole="employer" />
+        }
+      />
+      <Route
+        exact
+        path="/student/profile"
+        element={
+          <ProtectedRoute component={StudentProfile} requiredRole="student" />
+        }
+      />
 
+      <Route path="/unauthorized" element={UnAuthorized} />
       <Route path="/not-found" Component={NotFound} />
       <Route path="*" element={<Navigate to="/not-found" />} />
     </Routes>

@@ -1,4 +1,4 @@
-import { useParams, Navigate } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { useCallback, useEffect, useState } from "react";
 import Cookies from "js-cookie";
 import { Spin } from "antd";
@@ -9,7 +9,7 @@ import { EmployerHeaderContent } from "../../store/data";
 
 const Applications = () => {
   const { id } = useParams();
-  const jwtToken = Cookies.get("jwt_token");
+  const jwtToken = Cookies.get("jwtToken");
   const [applicationsList, setApplicationsList] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [selectedResume, setSelectedResume] = useState("");
@@ -45,10 +45,6 @@ const Applications = () => {
     setShowModal(false);
     setSelectedResume("");
   };
-
-  if (jwtToken === undefined) {
-    return <Navigate to="/employer/login" />;
-  }
 
   return (
     <>

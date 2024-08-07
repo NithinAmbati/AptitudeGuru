@@ -1,4 +1,3 @@
-import { Navigate } from "react-router-dom";
 import { useCallback, useEffect, useState } from "react";
 import Cookies from "js-cookie";
 import { Spin } from "antd";
@@ -8,7 +7,7 @@ import Header from "../../../layouts/Header";
 import { EmployerHeaderContent } from "../../../store/data";
 
 const ViewStudents = () => {
-  const jwtToken = Cookies.get("jwt_token");
+  const jwtToken = Cookies.get("jwtToken");
   const [studentsList, setStudentsList] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [selectedResume, setSelectedResume] = useState("");
@@ -41,10 +40,6 @@ const ViewStudents = () => {
     setShowModal(false);
     setSelectedResume("");
   };
-
-  if (jwtToken === undefined) {
-    return <Navigate to="/employer/login" />;
-  }
 
   return (
     <>

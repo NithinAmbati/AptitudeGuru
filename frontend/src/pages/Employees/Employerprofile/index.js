@@ -1,5 +1,4 @@
 import Cookies from "js-cookie";
-import { Navigate } from "react-router-dom";
 import { useEffect, useState, useCallback } from "react";
 import "./index.css";
 import { Spin } from "antd";
@@ -8,7 +7,7 @@ import Header from "../../../layouts/Header";
 import { EmployerHeaderContent } from "../../../store/data";
 
 const EmployerProfile = () => {
-  const jwtToken = Cookies.get("jwt_token");
+  const jwtToken = Cookies.get("jwtToken");
   const [userData, setUserData] = useState({});
   const [isLoading, setIsLoading] = useState(true);
   const [isEditing, setIsEditing] = useState(false);
@@ -48,10 +47,6 @@ const EmployerProfile = () => {
     }
     setIsEditing(false);
   };
-
-  if (jwtToken === undefined) {
-    return <Navigate to="/employer/login" />;
-  }
 
   return (
     <>

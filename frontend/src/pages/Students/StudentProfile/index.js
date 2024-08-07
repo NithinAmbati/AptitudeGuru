@@ -2,7 +2,6 @@ import Cookies from "js-cookie";
 import Select from "react-select";
 import makeAnimated from "react-select/animated";
 import { useEffect, useState, useCallback } from "react";
-import { Navigate } from "react-router-dom";
 import axios from "axios";
 import { Spin } from "antd";
 import "./index.css";
@@ -11,7 +10,7 @@ import Header from "../../../layouts/Header";
 import { StudentHeaderContent } from "../../../store/data";
 
 const EmployerProfile = () => {
-  const jwtToken = Cookies.get("jwt_token");
+  const jwtToken = Cookies.get("jwtToken");
   const [profile, setProfile] = useState({});
   const [isEditing, setIsEditing] = useState(false);
   const [selectedOptions, setSelectedOptions] = useState([]);
@@ -130,10 +129,6 @@ const EmployerProfile = () => {
   const handleChange = (selected) => {
     setSelectedOptions(selected.map((option) => option.value));
   };
-
-  if (jwtToken === undefined) {
-    return <Navigate to="/student/login" />;
-  }
 
   return (
     <>
