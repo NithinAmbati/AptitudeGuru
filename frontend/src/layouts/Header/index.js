@@ -36,7 +36,7 @@ const Header = (props) => {
   const handleTradeNameClick = () => {};
 
   const handleLogout = () => {
-    Cookies.remove("jwt_token");
+    Cookies.remove("jwtToken");
     navigate("/");
   };
 
@@ -49,7 +49,7 @@ const Header = (props) => {
             className="pointer text-white"
             to={headingLink}
           >
-            <strong>CAREERCONNECT</strong>
+            <strong>APTITUDE GURU</strong>
             <p className="text-xs relative left-[70px]">
               Find your best Employee
             </p>
@@ -66,7 +66,7 @@ const Header = (props) => {
                 Logout
               </button>
             ) : (
-              <li key={index} className="mt-3 mx-4">
+              <li key={index} className="mt-1 mx-4">
                 <Link to={item.link} className="text-white">
                   <strong>{item.title}</strong>
                 </Link>
